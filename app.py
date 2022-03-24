@@ -15,7 +15,10 @@ def kill_p(process):
 
 imgs_path = "./images/"
 imgs = os.listdir(imgs_path)
-imgs_n = len(imgs)
+if imgs == 0:
+    imgs_n = 0
+else:
+    imgs_n = len(imgs)
 
 vid_path = "./videos/"
 vid = os.listdir(vid_path)
