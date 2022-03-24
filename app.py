@@ -3,9 +3,11 @@ import os
 import signal
 import cv2
 from time import sleep
+import sys
+import argparse
 
-def yolo():
-    bashCommand = "python3 detect.py --source 0 --weights best.pt --nosave --imgsz 640 --window 1"
+def yolo(weights,cam):
+    bashCommand = "python3 detect.py --source "+cam+" --weights "+weights+" --nosave --imgsz 640 --window 1"
     process = subprocess.Popen(bashCommand, stdout=subprocess.PIPE, shell=True, preexec_fn=os.setpgrp)
     #output, error = process.communicate()
     return process
@@ -27,6 +29,10 @@ vid_n = len(vid)
 
 #timer for images change
 images_timer = 3000
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--cam', type=str)
+args = parser.parse_args()
 
 f = True
 #main loop
@@ -50,9 +56,12 @@ while(f):
         cap.release()
 
     #run yolo
-    p = yolo()
-    sleep(10)
-    kill_p(p)
+    p1 = yolo("best.pt", args.cam)
+    sleep(50)
+    p2 = yolo("yolov5s.pt",args.cam)
+    kill_p(p1)
+    sleep(50)
+    kill_p(p2)
 
     #image loop
     #read all images in /images folder and display
