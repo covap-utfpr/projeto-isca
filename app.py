@@ -15,13 +15,6 @@ def yolo(weights,cam):
 def kill_p(process):
     os.killpg(os.getpgid(process.pid), signal.SIGTERM)
 
-imgs_path = "./images/"
-imgs = os.listdir(imgs_path)
-if imgs == 0:
-    imgs_n = 0
-else:
-    imgs_n = len(imgs)
-
 vid_path = "./videos/"
 vid = os.listdir(vid_path)
 vid_n = len(vid)
@@ -58,17 +51,7 @@ while(f):
     #run yolo
     p1 = yolo("best.pt", args.cam)
     sleep(50)
-    p2 = yolo("yolov5s.pt",args.cam)
+    p2 = yolo("yolov5m.pt",args.cam)
     kill_p(p1)
     sleep(50)
     kill_p(p2)
-
-    #image loop
-    #read all images in /images folder and display
-    win = '3'
-    for i in range(imgs_n):
-        img = cv2.imread(imgs_path + imgs[i])
-        cv2.namedWindow(win, cv2.WND_PROP_FULLSCREEN)
-        cv2.setWindowProperty(win, cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
-        cv2.imshow(win, img)
-        cv2.waitKey(images_timer) 
