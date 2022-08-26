@@ -1,4 +1,4 @@
 #!/bin/bash
 
 cd yolov5/
-pip install requeriments.txt
+pip install -r requeriments.txt
